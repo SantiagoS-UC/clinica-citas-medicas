@@ -1,0 +1,31 @@
+h5 i {
+  color: var(--color-primario);
+}
+
+.filtro {
+  max-width: 240px;
+}
+
+.tabla-citas thead th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.foto-medico {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.vacio {
+  background: var(--color-primario-suave);
+  border-radius: 1rem;
+  color: var(--color-primario-oscuro);
+}
+
+.vacio i {
+  font-size: 2rem;
+}

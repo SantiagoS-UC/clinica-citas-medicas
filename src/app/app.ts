@@ -1,12 +1,15 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { Encabezado } from './componentes/encabezado/encabezado';
+import { BarraNavegacion } from './componentes/barra-navegacion/barra-navegacion';
+import { Carrusel } from './componentes/carrusel/carrusel';
+import { Medicos } from './componentes/medicos/medicos';
+import { Registro } from './componentes/registro/registro';
+import { PiePagina } from './componentes/pie-pagina/pie-pagina';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
+  imports: [Encabezado, BarraNavegacion, Carrusel, Medicos, Registro, PiePagina],
   templateUrl: './app.html',
+  styleUrl: './app.css',
 })
-export class App {
-  protected readonly title = signal('clinica-citas-medicas');
-}
+export class App {}

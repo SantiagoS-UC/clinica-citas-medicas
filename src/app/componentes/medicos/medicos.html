@@ -1,0 +1,27 @@
+<section id="medicos" class="seccion">
+  <div class="container">
+    <div class="text-center mb-4">
+      <span class="subtitulo-seccion">Nuestro equipo</span>
+      <h2 class="titulo-seccion">Médicos especialistas</h2>
+      <p class="lead text-muted">Profesionales comprometidos con tu salud y bienestar.</p>
+    </div>
+
+    <div class="row g-4">
+      <aside class="col-12 col-sm-2 col-md-4">
+        <app-barra-especialidades />
+      </aside>
+
+      <div class="col-12 col-sm-10 col-md-8">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+          @for (medico of clinica.medicosFiltrados(); track medico.id) {
+            <div class="col">
+              <app-tarjeta-medico [medico]="medico"
+                                  [especialidad]="clinica.nombreEspecialidad(medico.especialidadId)"
+                                  (agendar)="agendarCita($event)" />
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

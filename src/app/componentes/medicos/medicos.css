@@ -1,0 +1,12 @@
+app-tarjeta-medico {
+  display: block;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  aside app-barra-especialidades {
+    display: block;
+    position: sticky;
+    top: 90px;
+  }
+}

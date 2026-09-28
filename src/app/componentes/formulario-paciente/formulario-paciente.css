@@ -1,0 +1,9 @@
+.form-label {
+  font-weight: 500;
+}
+
+
+/* Espacio reservado para los mensajes de error (evita que el formulario "salte") */
+.text-danger {
+  min-height: 1.3em;
+}

@@ -1,0 +1,108 @@
+<div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-3">
+  <h5 class="fw-bold mb-0">
+    <i class="bi bi-calendar-week"></i> Citas agendadas
+    <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis">{{ clinica.citas().length }}</span>
+  </h5>
+  @if (clinica.pacientes().length > 0) {
+    <select class="form-select form-select-sm filtro" aria-label="Filtrar por paciente" (change)="cambiarFiltro($event)">
+      <option value="0" [selected]="filtroPaciente() === 0">Todos los pacientes</option>
+      @for (paciente of clinica.pacientes(); track paciente.id) {
+        <option [value]="paciente.id" [selected]="filtroPaciente() === paciente.id">
+          {{ paciente.nombres }} {{ paciente.apellidos }}
+        </option>
+      }
+    </select>
+  }
+</div>
+
+@if (citasVisibles().length === 0) {
+  <div class="vacio text-center p-4 mb-4">
+    <i class="bi bi-calendar-x"></i>
+    <p class="mb-2">No hay citas para mostrar.</p>
+    <button type="button" class="btn btn-primary btn-sm" (click)="irAAgendar()">
+      <i class="bi bi-calendar-plus"></i> Agendar una cita
+    </button>
+  </div>
+} @else {
+  <div class="table-responsive mb-4">
+    <table class="table table-hover align-middle tabla-citas">
+      <thead>
+        <tr>
+          <th>Fecha y hora</th>
+          <th>Paciente</th>
+          <th>Médico</th>
+          <th class="d-none d-md-table-cell">Motivo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (cita of citasVisibles(); track cita.id) {
+          <tr>
+            <td class="text-nowrap">
+              <div class="fw-semibold">{{ cita.fecha | date: 'dd-MM-yyyy' }}</div>
+              <small class="text-muted"><i class="bi bi-clock"></i> {{ cita.hora }}</small>
+            </td>
+            <td>{{ nombrePaciente(cita.pacienteId) }}</td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <img [src]="imagenMedico(cita.medicoId)" alt="" class="foto-medico d-none d-sm-block" />
+                <div>
+                  <div>{{ nombreMedico(cita.medicoId) }}</div>
+                  <small class="text-muted">{{ especialidadMedico(cita.medicoId) }}</small>
+                </div>
+              </div>
+            </td>
+            <td class="d-none d-md-table-cell small text-muted">{{ cita.motivo || '—' }}</td>
+            <td class="text-end text-nowrap">
+              @if (citaPorCancelar() === cita.id) {
+                <span class="small me-1">¿Cancelar?</span>
+                <button type="button" class="btn btn-danger btn-sm" (click)="confirmarCancelacion(cita.id)">Sí</button>
+                <button type="button" class="btn btn-light btn-sm ms-1" (click)="citaPorCancelar.set(null)">No</button>
+              } @else {
+                <button type="button" class="btn btn-outline-danger btn-sm" title="Cancelar cita"
+                        (click)="citaPorCancelar.set(cita.id)">
+                  <i class="bi bi-calendar-x"></i><span class="d-none d-lg-inline"> Cancelar</span>
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<h5 class="fw-bold mb-3">
+  <i class="bi bi-people"></i> Pacientes registrados
+  <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis">{{ clinica.pacientes().length }}</span>
+</h5>
+
+@if (clinica.pacientes().length === 0) {
+  <p class="text-muted small">Todavía no hay pacientes. Regístralos en la pestaña <strong>Registro de paciente</strong>.</p>
+} @else {
+  <ul class="list-group">
+    @for (paciente of clinica.pacientes(); track paciente.id) {
+      <li class="list-group-item d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+        <div>
+          <div class="fw-semibold">{{ paciente.nombres }} {{ paciente.apellidos }}</div>
+          <small class="text-muted">
+            {{ paciente.tipoDocumento }} {{ paciente.numeroDocumento }} · {{ paciente.correo }} ·
+            {{ citasDePaciente(paciente.id) }} cita(s)
+          </small>
+        </div>
+        <div class="text-nowrap">
+          @if (pacientePorEliminar() === paciente.id) {
+            <span class="small me-1">¿Eliminar paciente y sus citas?</span>
+            <button type="button" class="btn btn-danger btn-sm" (click)="confirmarEliminacion(paciente.id)">Sí</button>
+            <button type="button" class="btn btn-light btn-sm ms-1" (click)="pacientePorEliminar.set(null)">No</button>
+          } @else {
+            <button type="button" class="btn btn-outline-secondary btn-sm" title="Eliminar paciente"
+                    (click)="pacientePorEliminar.set(paciente.id)">
+              <i class="bi bi-trash3"></i>
+            </button>
+          }
+        </div>
+      </li>
+    }
+  </ul>
+}

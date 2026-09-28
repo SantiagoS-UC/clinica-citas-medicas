@@ -1,0 +1,55 @@
+<section id="registro" class="seccion seccion-registro">
+  <div class="container">
+    <div class="text-center mb-4">
+      <span class="subtitulo-seccion">Pacientes y citas</span>
+      <h2 class="titulo-seccion text-center mb-4">Registro de nuevos usuarios</h2>
+      <p class="lead text-muted">Registra al paciente, agenda su cita y consúltala cuando quieras.</p>
+    </div>
+
+    <div class="row g-0 tarjeta-registro">
+      <div class="col-lg-4 panel-info d-flex flex-column justify-content-center">
+        <h4 class="fw-bold mb-3">¿Cómo funciona?</h4>
+        <ol class="list-unstyled pasos mb-4">
+          <li><span>1</span><div>Registra al paciente con sus datos personales.</div></li>
+          <li><span>2</span><div>Escoge el paciente, el médico, la fecha y la hora de la cita.</div></li>
+          <li><span>3</span><div>Consulta o cancela las citas en <strong>Citas registradas</strong>.</div></li>
+        </ol>
+        <div class="d-flex gap-3 resumen">
+          <div><strong>{{ clinica.pacientes().length }}</strong><small>pacientes</small></div>
+          <div><strong>{{ clinica.citas().length }}</strong><small>citas</small></div>
+        </div>
+      </div>
+
+      <div class="col-lg-8 p-4 p-md-5 bg-white">
+        <!-- Pestañas: se manejan con Angular para poder cambiarlas desde otros componentes -->
+        <ul class="nav nav-tabs mb-4">
+          @for (pestana of pestanas; track pestana.id) {
+            <li class="nav-item">
+              <button type="button" class="nav-link" [class.active]="clinica.pestanaActiva() === pestana.id"
+                      (click)="cambiarPestana(pestana.id)">
+                <i class="bi" [class]="pestana.icono"></i>
+                <span class="d-none d-sm-inline"> {{ pestana.texto }}</span>
+                <span class="d-sm-none"> {{ pestana.textoCorto }}</span>
+                @if (pestana.id === 'citas' && clinica.citas().length > 0) {
+                  <span class="badge rounded-pill ms-1 contador">{{ clinica.citas().length }}</span>
+                }
+              </button>
+            </li>
+          }
+        </ul>
+
+        @switch (clinica.pestanaActiva()) {
+          @case ('paciente') {
+            <app-formulario-paciente />
+          }
+          @case ('cita') {
+            <app-agendar-cita />
+          }
+          @case ('citas') {
+            <app-lista-citas />
+          }
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,136 @@
+@if (pacienteRegistrado(); as paciente) {
+  <div class="alert alert-success d-flex flex-column flex-sm-row align-items-sm-center gap-2" role="alert">
+    <i class="bi bi-check-circle-fill fs-5"></i>
+    <span class="flex-grow-1">
+      <strong>{{ paciente.nombres }} {{ paciente.apellidos }}</strong> quedó registrado(a) como paciente.
+    </span>
+    <button type="button" class="btn btn-success btn-sm text-nowrap" (click)="agendarParaPaciente(paciente)">
+      <i class="bi bi-calendar-plus"></i> Agendarle una cita
+    </button>
+  </div>
+}
+
+@if (mensajeError()) {
+  <div class="alert alert-warning d-flex gap-2" role="alert">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <span>{{ mensajeError() }}</span>
+  </div>
+}
+
+<form [formGroup]="formulario" (ngSubmit)="registrar()" novalidate>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="nombres" class="form-label">Nombres *</label>
+      <input id="nombres" type="text" class="form-control" formControlName="nombres"
+             placeholder="Ej: Ana María" (blur)="validarCampo('nombres')"
+             [class.is-invalid]="esInvalido('nombres')" [class.is-valid]="esValido('nombres')" />
+      <div class="text-danger small mt-1">{{ errores().nombres }}</div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="apellidos" class="form-label">Apellidos *</label>
+      <input id="apellidos" type="text" class="form-control" formControlName="apellidos"
+             placeholder="Ej: Gómez Ruiz" (blur)="validarCampo('apellidos')"
+             [class.is-invalid]="esInvalido('apellidos')" [class.is-valid]="esValido('apellidos')" />
+      <div class="text-danger small mt-1">{{ errores().apellidos }}</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label for="tipoDocumento" class="form-label">Tipo de documento *</label>
+      <select id="tipoDocumento" class="form-select" formControlName="tipoDocumento"
+              (blur)="validarCampo('tipoDocumento')"
+              [class.is-invalid]="esInvalido('tipoDocumento')" [class.is-valid]="esValido('tipoDocumento')">
+        <option value="">Seleccione...</option>
+        <option value="CC">Cédula de ciudadanía</option>
+        <option value="TI">Tarjeta de identidad</option>
+        <option value="CE">Cédula de extranjería</option>
+        <option value="PA">Pasaporte</option>
+      </select>
+      <div class="text-danger small mt-1">{{ errores().tipoDocumento }}</div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="numeroDocumento" class="form-label">Número de documento *</label>
+      <input id="numeroDocumento" type="text" inputmode="numeric" class="form-control"
+             formControlName="numeroDocumento" (blur)="validarCampo('numeroDocumento')"
+             [class.is-invalid]="esInvalido('numeroDocumento')" [class.is-valid]="esValido('numeroDocumento')" />
+      <div class="text-danger small mt-1">{{ errores().numeroDocumento }}</div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="fechaNacimiento" class="form-label">Fecha de nacimiento *</label>
+      <input id="fechaNacimiento" type="date" class="form-control" formControlName="fechaNacimiento"
+             (blur)="validarCampo('fechaNacimiento')"
+             [class.is-invalid]="esInvalido('fechaNacimiento')" [class.is-valid]="esValido('fechaNacimiento')" />
+      <div class="text-danger small mt-1">{{ errores().fechaNacimiento }}</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label d-block">Sexo *</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="sexoF" value="F" formControlName="sexo" [class.is-invalid]="esInvalido('sexo')" />
+      <label class="form-check-label" for="sexoF">Femenino</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="sexoM" value="M" formControlName="sexo" [class.is-invalid]="esInvalido('sexo')" />
+      <label class="form-check-label" for="sexoM">Masculino</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" id="sexoO" value="O" formControlName="sexo" [class.is-invalid]="esInvalido('sexo')" />
+      <label class="form-check-label" for="sexoO">Otro</label>
+    </div>
+    <div class="text-danger small">{{ errores().sexo }}</div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="telefono" class="form-label">Celular *</label>
+      <input id="telefono" type="tel" class="form-control" formControlName="telefono"
+             placeholder="3001234567" (blur)="validarCampo('telefono')"
+             [class.is-invalid]="esInvalido('telefono')" [class.is-valid]="esValido('telefono')" />
+      <div class="text-danger small mt-1">{{ errores().telefono }}</div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="correo" class="form-label">Correo electrónico *</label>
+      <input id="correo" type="email" class="form-control" formControlName="correo"
+             placeholder="nombre@correo.com" (blur)="validarCampo('correo')"
+             [class.is-invalid]="esInvalido('correo')" [class.is-valid]="esValido('correo')" />
+      <div class="text-danger small">{{ errores().correo }}</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="contrasena" class="form-label">Contraseña *</label>
+      <input id="contrasena" type="password" class="form-control" formControlName="contrasena"
+             autocomplete="new-password" (blur)="validarCampo('contrasena')"
+             [class.is-invalid]="esInvalido('contrasena')" [class.is-valid]="esValido('contrasena')" />
+      <div class="form-text">Mínimo 8 caracteres, con letras y números.</div>
+      <div class="text-danger small">{{ errores().contrasena }}</div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="confirmarContrasena" class="form-label">Confirmar contraseña *</label>
+      <input id="confirmarContrasena" type="password" class="form-control"
+             formControlName="confirmarContrasena" autocomplete="new-password"
+             (blur)="validarCampo('confirmarContrasena')"
+             [class.is-invalid]="esInvalido('confirmarContrasena')"
+             [class.is-valid]="esValido('confirmarContrasena')" />
+      <div class="text-danger small mt-1">{{ errores().confirmarContrasena }}</div>
+    </div>
+  </div>
+
+  <div class="form-check mb-4">
+    <input class="form-check-input" type="checkbox" id="terminos" formControlName="terminos" [class.is-invalid]="esInvalido('terminos')" />
+    <label class="form-check-label" for="terminos">
+      Acepto los términos y el tratamiento de mis datos personales *
+    </label>
+    <div class="text-danger small">{{ errores().terminos }}</div>
+  </div>
+
+  <div class="d-flex justify-content-start gap-2">
+    <button type="submit" class="btn btn-primary px-4">
+      <i class="bi bi-person-plus"></i> Registrar
+    </button>
+    <button type="button" class="btn btn-outline-secondary" (click)="limpiar()">Limpiar</button>
+  </div>
+</form>

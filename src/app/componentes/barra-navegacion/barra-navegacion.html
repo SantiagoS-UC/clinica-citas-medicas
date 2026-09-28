@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-md bg-white sticky-top barra">
+  <div class="container-fluid px-3 px-lg-5">
+    <a class="navbar-brand fw-bold" href="#">
+      <i class="bi bi-heart-pulse-fill"></i> Salud Integral
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal" aria-expanded="false" aria-label="Mostrar menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menuPrincipal">
+      <ul class="navbar-nav ms-auto align-items-md-center gap-md-2">
+        @for (enlace of enlaces; track enlace.destino) {
+          <li class="nav-item">
+            <a class="nav-link" [href]="enlace.destino">
+              <i class="bi" [class]="enlace.icono"></i> {{ enlace.texto }}
+            </a>
+          </li>
+        }
+        <li class="nav-item mt-2 mt-md-0">
+          <a class="btn btn-primary rounded-pill px-3" href="#registro">
+            <i class="bi bi-calendar-check"></i> Agenda tu cita
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

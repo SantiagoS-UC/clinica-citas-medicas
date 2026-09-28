@@ -1,0 +1,46 @@
+<footer class="pie text-white">
+  <div class="container-fluid px-3 px-lg-5 pt-5 pb-3">
+    <div class="row g-4">
+      <div class="col-md-5">
+        <h5 class="fw-bold"><i class="bi bi-heart-pulse-fill"></i> Clínica Salud Integral</h5>
+        <p class="texto-suave">
+          Cuidamos tu salud con un enfoque integral: terapias alternativas, rehabilitación y nutrición
+          con profesionales certificados.
+        </p>
+        <div class="d-flex gap-2">
+          @for (red of redes; track red.nombre) {
+            <a [href]="red.url" target="_blank" rel="noopener" class="red-social"
+               [title]="red.nombre" [attr.aria-label]="red.nombre">
+              <i class="bi" [class]="red.icono"></i>
+            </a>
+          }
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <h6 class="fw-bold text-uppercase">Especialidades</h6>
+        <ul class="list-unstyled texto-suave small">
+          @for (esp of clinica.especialidades; track esp.id) {
+            <li class="mb-1">{{ esp.nombre }}</li>
+          }
+        </ul>
+      </div>
+
+      <div class="col-6 col-md-4">
+        <h6 class="fw-bold text-uppercase">Contacto</h6>
+        <ul class="list-unstyled texto-suave small">
+          <li class="mb-2"><i class="bi bi-geo-alt-fill"></i> Calle 5 # 10-20, Popayán, Cauca</li>
+          <li class="mb-2"><i class="bi bi-telephone-fill"></i> (602) 820 1234</li>
+          <li class="mb-2"><i class="bi bi-envelope-fill"></i> contacto&#64;saludintegral.com</li>
+          <li class="mb-2"><i class="bi bi-clock-fill"></i> Lun - Sáb · 7:00 a.m. - 7:00 p.m.</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="my-4" />
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-2 small texto-suave">
+      <span>&copy; {{ anio }} Clínica Salud Integral. Todos los derechos reservados.</span>
+      <span>Laboratorio de Ingeniería del Software III · Universidad del Cauca</span>
+    </div>
+  </div>
+</footer>

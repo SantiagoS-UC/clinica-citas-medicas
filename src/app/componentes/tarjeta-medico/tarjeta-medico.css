@@ -1,0 +1,73 @@
+.tarjeta {
+  border-color: #e2e8f0 !important;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.tarjeta:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+}
+
+.contenedor-foto {
+  position: relative;
+  overflow: hidden;
+}
+
+.contenedor-foto img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.tarjeta:hover .contenedor-foto img {
+  transform: scale(1.06);
+}
+
+.especialidad {
+  position: absolute;
+  left: 0.6rem;
+  bottom: 0.6rem;
+  max-width: calc(100% - 1.2rem);
+  white-space: normal;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-primario-oscuro);
+  font-weight: 600;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.sub {
+  font-size: 0.85rem;
+  color: var(--color-primario);
+  font-weight: 500;
+}
+
+.motivacion {
+  font-size: 0.88rem;
+  font-style: italic;
+  color: #64748b;
+}
+
+.motivacion i {
+  color: var(--color-acento);
+  font-size: 1.2rem;
+  margin-right: 0.15rem;
+}
+
+.experiencia {
+  color: #475569;
+}
+
+/* En celulares (1 carta por fila) la foto no es tan alta */
+@media (max-width: 575.98px) {
+  .contenedor-foto img {
+    aspect-ratio: 4 / 3;
+    object-position: center 20%;
+  }
+}

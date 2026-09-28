@@ -1,0 +1,16 @@
+<div class="card h-100 border tarjeta">
+  <div class="contenedor-foto">
+    <img [src]="medico().imagen" class="card-img-top img-fluid"
+         [alt]="medico().titulo + ' ' + medico().nombres + ' ' + medico().apellidos" />
+    <span class="badge especialidad">{{ especialidad() }}</span>
+  </div>
+  <div class="card-body d-flex flex-column">
+    <h5 class="card-title mb-1">{{ medico().titulo }} {{ medico().nombres }} {{ medico().apellidos }}</h5>
+    <p class="sub mb-2"><i class="bi bi-award"></i> {{ medico().subespecialidad }}</p>
+    <p class="motivacion flex-grow-1"><i class="bi bi-quote"></i>{{ medico().motivacion }}</p>
+    <p class="experiencia small mb-3"><i class="bi bi-stars"></i> {{ medico().experiencia }} años de experiencia</p>
+    <a href="#registro" class="btn btn-primary btn-sm w-100 text-nowrap" (click)="onAgendar()">
+      <i class="bi bi-calendar-check"></i> Agendar cita
+    </a>
+  </div>
+</div>

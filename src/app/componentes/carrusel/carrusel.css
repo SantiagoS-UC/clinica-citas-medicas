@@ -1,0 +1,70 @@
+.contenedor-carrusel {
+  width: 100%;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15);
+}
+
+.img-promo {
+  height: 420px;
+  object-fit: cover;
+}
+
+.texto-promo {
+  position: absolute;
+  top: 50%;
+  left: 12%;
+  transform: translateY(-50%);
+  max-width: 45%;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.texto-promo h3 {
+  font-size: 2rem;
+}
+
+.etiqueta-promo {
+  background: var(--color-acento);
+  color: #1f2937;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 767.98px) {
+  .img-promo {
+    height: 280px;
+  }
+  .texto-promo {
+    max-width: 60%;
+  }
+  .texto-promo h3 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .img-promo {
+    height: 240px;
+    object-position: 70% center;
+  }
+  .texto-promo {
+    left: 12%;
+    max-width: 55%;
+  }
+  .texto-promo h3 {
+    font-size: 1.05rem;
+  }
+}
+
+/* Degradado para que el texto se lea sobre la imagen */
+.carousel-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(8, 47, 73, 0.55) 0%, rgba(8, 47, 73, 0.15) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+.texto-promo {
+  z-index: 2;
+}

@@ -1,0 +1,32 @@
+<div class="barra-lateral">
+  <h5 class="titulo-barra"><i class="bi bi-hospital"></i> Especialidades</h5>
+
+  <div class="list-group lista-especialidades">
+    <a href="#medicos" class="list-group-item list-group-item-action"
+       [class.active]="clinica.especialidadSeleccionada() === ''"
+       (click)="seleccionar('', $event)">
+      <i class="bi bi-grid"></i>
+      <span class="nombre">Todas</span>
+      <span class="badge rounded-pill contador">{{ clinica.medicos.length }}</span>
+    </a>
+    @for (esp of clinica.especialidades; track esp.id) {
+      <a href="#medicos" class="list-group-item list-group-item-action"
+         [class.active]="clinica.especialidadSeleccionada() === esp.id"
+         (click)="seleccionar(esp.id, $event)">
+        <i class="bi" [class]="esp.icono"></i>
+        <span class="nombre">{{ esp.nombre }}</span>
+        <span class="badge rounded-pill contador">{{ clinica.cantidadMedicos(esp.id) }}</span>
+      </a>
+    }
+  </div>
+
+  <!-- Descripción de la especialidad seleccionada -->
+  <div class="descripcion mt-3">
+    @if (clinica.especialidadActual(); as esp) {
+      <h6 class="fw-bold mb-1"><i class="bi" [class]="esp.icono"></i> {{ esp.nombre }}</h6>
+      <p class="mb-0">{{ esp.descripcion }}</p>
+    } @else {
+      <p class="mb-0"><i class="bi bi-info-circle-fill"></i> Selecciona una especialidad para conocer en qué consiste y ver sus médicos.</p>
+    }
+  </div>
+</div>
